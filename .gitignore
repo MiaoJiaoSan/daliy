@@ -6,5 +6,5 @@
 **/.vscode/
 **/target/
 
-**/idea/
+**/.idea/
 **/*iml
