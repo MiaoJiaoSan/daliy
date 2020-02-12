@@ -1,5 +1,6 @@
 package cn.net.immortal;
 
+import cn.net.immortal.beans.MyBean;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -8,9 +9,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-        AnnotationConfigApplicationContext conetxt = new AnnotationConfigApplicationContext();
+    public static void main( String[] args ) {
+
+        AnnotationConfigApplicationContext context
+                = new AnnotationConfigApplicationContext("cn.net.immortal");
+
+        MyBean bean = context.getBean(MyBean.class);
+        System.out.println(bean.getName());
     }
 }
- 
