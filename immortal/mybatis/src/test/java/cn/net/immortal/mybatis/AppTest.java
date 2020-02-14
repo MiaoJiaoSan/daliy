@@ -22,18 +22,24 @@ public class AppTest {
 
     @Before
     public void addConfig() throws IOException {
+        //构建sqlSessionFactory
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+        //这个流不用自己关闭
         InputStream resourceAsStream = Resources.getResourceAsStream(configXml);
+        //DefaultSqlSessionFactory
         this.sqlSessionFactory = builder.build(resourceAsStream);
-        resourceAsStream.close();
     }
 
 
     @Test
     public void mybatisSourceTest(){
         SqlSession sqlSession = this.sqlSessionFactory.openSession();
+        //根据type从mapperRegistry由MapperProxyFactory创建一个MapperProxy
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        //动态代理 InvocationHandler.invoke
         List<User> userList = userMapper.getUserList();
+        List<User> userList2 = userMapper.getUserList();
+        assert userList == userList;
         userList.forEach(System.out::print);
     }
 }
