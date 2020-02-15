@@ -568,8 +568,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				try {
 					//MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition
 					//启动时注册的BeanPostProcessor
-					//	AutowiredAnnotationBeanPostProcessor 收集类上注解@Autowried，@Value等
-					//	CommonAnnotationBeanPostProcessor 收集类上注解@
+					//	AutowiredAnnotationBeanPostProcessor 收集类上注解@Autowried,@Value
+					//	CommonAnnotationBeanPostProcessor 收集类上注解@Resource
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {

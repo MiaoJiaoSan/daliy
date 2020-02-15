@@ -3,9 +3,8 @@ package cn.net.immortal.spring.beans;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-@Component
 @Data
-public class MyBean {
+public class MyXmlBean {
 
-    private String name = "my bean";
+    private String name = "my xmlBean";
 }

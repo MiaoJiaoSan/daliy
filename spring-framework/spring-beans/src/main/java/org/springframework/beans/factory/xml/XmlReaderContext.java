@@ -44,6 +44,9 @@ import org.springframework.lang.Nullable;
  */
 public class XmlReaderContext extends ReaderContext {
 
+	/**
+	 * xml解析上下文
+	 */
 	private final XmlBeanDefinitionReader reader;
 
 	private final NamespaceHandlerResolver namespaceHandlerResolver;
@@ -79,6 +82,7 @@ public class XmlReaderContext extends ReaderContext {
 	/**
 	 * Return the bean definition registry to use.
 	 * @see XmlBeanDefinitionReader#XmlBeanDefinitionReader(BeanDefinitionRegistry)
+	 * BeanDefinition注册器
 	 */
 	public final BeanDefinitionRegistry getRegistry() {
 		return this.reader.getRegistry();

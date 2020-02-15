@@ -11,6 +11,7 @@
     <modules>
         <module>spring</module>
         <module>mybatis</module>
+        <module>spring-mvc</module>
     </modules>
 
     <name>immortal</name>
@@ -32,6 +33,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.8</version>
@@ -40,6 +47,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
+                <version>5.2.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
                 <version>5.2.3.RELEASE</version>
             </dependency>
             <dependency>
