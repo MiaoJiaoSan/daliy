@@ -629,7 +629,7 @@ public class Configuration {
       executor = new SimpleExecutor(this, transaction);
     }
     if (cacheEnabled) {
-      //执行器增加缓存能力
+      //执行器增加缓存能力，从 mappedStatement,中获取的二级缓存XmlMapperBulider时创建的
       executor = new CachingExecutor(executor);
     }
     executor = (Executor) interceptorChain.pluginAll(executor);

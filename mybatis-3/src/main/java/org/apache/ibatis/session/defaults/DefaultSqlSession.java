@@ -47,11 +47,26 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class DefaultSqlSession implements SqlSession {
 
+  /**
+   * configuration对象，mybatis所有配置信
+   */
   private final Configuration configuration;
+  /**
+   * sql执行器 cache/base
+   */
   private final Executor executor;
 
+  /**
+   * 事务自动提交
+   */
   private final boolean autoCommit;
+  /**
+   * 脏读？？
+   */
   private boolean dirty;
+  /**
+   * 游标？？
+   */
   private List<Cursor<?>> cursorList;
 
   public DefaultSqlSession(Configuration configuration, Executor executor, boolean autoCommit) {

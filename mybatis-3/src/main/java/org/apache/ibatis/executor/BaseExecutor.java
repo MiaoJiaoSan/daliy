@@ -149,8 +149,12 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
+      //如果查询不需要resultHandler
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
+        //只处理存储过程和函数调用的出参,
+        //因为存储过程和函数的返回不是通过ResultMap而是ParameterMap来的，
+        //所以只要把缓存的非IN模式参数取出来设置到parameter对应的属性上即可
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
         list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
@@ -319,13 +323,16 @@ public abstract class BaseExecutor implements Executor {
 
   private <E> List<E> queryFromDatabase(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
     List<E> list;
+    //占位？？干啥的？提前扩容？
     localCache.putObject(key, EXECUTION_PLACEHOLDER);
     try {
+      //具体执行器 Reuse,Simple,Bach
       list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
     } finally {
       localCache.removeObject(key);
     }
     localCache.putObject(key, list);
+    //如果存储过程，把查询参数放到本地出参缓存中
     if (ms.getStatementType() == StatementType.CALLABLE) {
       localOutputParameterCache.putObject(key, parameter);
     }

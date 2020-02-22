@@ -12,8 +12,8 @@
         <result column="email" property="email"/>
     </resultMap>
 
-    <select id="getUserList" resultMap="User">
+    <select id="getUserList" resultMap="User" parameterType="Long">
         select id,account_id,name,phone,email
-        from user
+        from user where id = #{id}
     </select>
 </mapper>
