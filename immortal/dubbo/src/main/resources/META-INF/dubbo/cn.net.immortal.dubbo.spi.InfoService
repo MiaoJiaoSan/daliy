@@ -1,0 +1,3 @@
+a=cn.net.immortal.dubbo.spi.impl.InfoServiceAImpl
+b=cn.net.immortal.dubbo.spi.impl.InfoServiceBImpl
+c=cn.net.immortal.dubbo.spi.impl.InfoServiceCImpl
