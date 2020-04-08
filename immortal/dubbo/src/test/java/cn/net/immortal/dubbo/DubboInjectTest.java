@@ -12,6 +12,8 @@ public class DubboInjectTest {
     public void  injectTest(){
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DubboConfiguration.class);
         annotationConfigApplicationContext.start();
+
+
         ExtensionLoader<InfoService> extensionLoader = ExtensionLoader.getExtensionLoader(InfoService.class);
         extensionLoader.getExtension("a").sayHello();
         extensionLoader.getExtension("b").sayHello();

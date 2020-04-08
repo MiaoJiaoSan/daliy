@@ -1,8 +1,10 @@
 package cn.net.immortal.dubbo.spi;
 
+import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Set;
 
 public class DubboTest {
@@ -31,6 +33,17 @@ public class DubboTest {
         Set<String> supportedExtensions = infoServiceLoader.getSupportedExtensions();
         supportedExtensions.forEach(System.out::println);
 //        infoService.sayHello();
+    }
+
+
+    @Test
+    public void dubboActivateTest(){
+        //需要接口标注@SPI("a")注解 默认实现类 配置为a 否则getDefaultExtension()报错
+        ExtensionLoader<InfoService> infoServiceLoader = ExtensionLoader.getExtensionLoader(InfoService.class);
+        URL url = URL.valueOf("test://localhost/test");
+        //第三个参数group
+        List<InfoService> infoServices = infoServiceLoader.getActivateExtension(url,"","a");
+        infoServices.forEach(InfoService::sayHello);
     }
 
 

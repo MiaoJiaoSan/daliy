@@ -5,7 +5,7 @@ import cn.net.immortal.dubbo.spi.InfoService;
 import com.alibaba.dubbo.common.extension.Activate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Activate
+@Activate(group = "a")
 public class InfoServiceBImpl implements InfoService {
 
     DubboService dubboService;
