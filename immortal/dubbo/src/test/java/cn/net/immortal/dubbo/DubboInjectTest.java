@@ -5,11 +5,14 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
+import java.util.concurrent.*;
+
 public class DubboInjectTest {
 
 
     @Test
-    public void  injectTest(){
+    public void injectTest() {
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(DubboConfiguration.class);
         annotationConfigApplicationContext.start();
 
@@ -18,4 +21,6 @@ public class DubboInjectTest {
         extensionLoader.getExtension("a").sayHello();
         extensionLoader.getExtension("b").sayHello();
     }
+
+
 }
