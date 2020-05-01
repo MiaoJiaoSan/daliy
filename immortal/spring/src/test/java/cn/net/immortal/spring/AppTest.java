@@ -1,7 +1,5 @@
 package cn.net.immortal.spring;
 
-import static org.junit.Assert.*;
-
 import cn.net.immortal.spring.beans.MyAnnotationBean;
 import cn.net.immortal.spring.beans.MyXmlBean;
 import org.junit.Test;
