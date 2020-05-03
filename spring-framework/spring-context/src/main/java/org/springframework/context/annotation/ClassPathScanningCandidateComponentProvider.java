@@ -93,7 +93,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private String resourcePattern = DEFAULT_RESOURCE_PATTERN;
-
+	//存放要扫描的注解
 	private final List<TypeFilter> includeFilters = new LinkedList<>();
 
 	private final List<TypeFilter> excludeFilters = new LinkedList<>();
@@ -204,6 +204,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 */
 	@SuppressWarnings("unchecked")
 	protected void registerDefaultFilters() {
+		//添加Component Service是继承Component的
 		this.includeFilters.add(new AnnotationTypeFilter(Component.class));
 		ClassLoader cl = ClassPathScanningCandidateComponentProvider.class.getClassLoader();
 		try {
@@ -418,6 +419,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 		try {
 			String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
 					resolveBasePackage(basePackage) + '/' + this.resourcePattern;
+			//递归
 			Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
 			boolean traceEnabled = logger.isTraceEnabled();
 			boolean debugEnabled = logger.isDebugEnabled();
@@ -427,8 +429,11 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				}
 				if (resource.isReadable()) {
 					try {
+						//SimpleMetadataReader  classMetaDate=SimpleAnnotationMetadataReadingVisitor.getMetaDate 包装了类信息
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
+						//根据filter判断如果类上有注解
 						if (isCandidateComponent(metadataReader)) {
+							//metadataReader.getAnnotationMetadata() 给ScannedGenericBeanDefinition.metaDate赋值
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setResource(resource);
 							sbd.setSource(resource);
@@ -512,6 +517,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 			this.conditionEvaluator =
 					new ConditionEvaluator(getRegistry(), this.environment, this.resourcePatternResolver);
 		}
+		//SimpleAnnotationMetadataReadingVisitor  ClassMetadata 类信息 如 是否抽象，接口信息 ...
 		return !this.conditionEvaluator.shouldSkip(metadataReader.getAnnotationMetadata());
 	}
 

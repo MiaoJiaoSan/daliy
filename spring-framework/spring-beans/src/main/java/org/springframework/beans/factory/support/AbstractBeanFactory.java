@@ -919,6 +919,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// Remove from old position, if any
 		this.beanPostProcessors.remove(beanPostProcessor);
 		// Track whether it is instantiation/destruction aware
+		// 为什么要特殊处理？？ 涉及到IOC过程，如果返回false所有DI失效
 		if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
 			this.hasInstantiationAwareBeanPostProcessors = true;
 		}

@@ -54,5 +54,6 @@ public class AppTest {
 //        List<User> userList = userMapper.getUserList();
         assert userList == userList;
         userList.forEach(System.out::print);
+
     }
 }
