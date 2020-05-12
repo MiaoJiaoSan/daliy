@@ -1,0 +1,19 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: configuration
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: /home/miaojiaosan/workspace/configuration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

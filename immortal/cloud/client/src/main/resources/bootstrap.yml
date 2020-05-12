@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: client
+  cloud:
+    config:
+      uri: http://127.0.0.1:8086
+      profile: default
+      #快速失败
+      fail-fast: true
+      retry:
+        multiplier: 1.1
+        #最大时间间隔
+        max-interval: 2000
+        #默认时间间隔
+        initial-interval: 1000
+        #重试次数
+        max-attempts: 6
+  aop:
+    auto: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
