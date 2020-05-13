@@ -1,0 +1,36 @@
+```sequence
+title:spring
+participant AbstractApplicationContext
+participant AbstractRefreshableApplicationContext
+participant AbstractXmlApplicationContext
+participant XmlBeanDefinitionReader
+participant BeanDefinitionDocumentReader
+participant BeanDefinitionParserDelegate
+participant BeanFactory
+
+
+
+
+AbstractApplicationContext->AbstractApplicationContext: obtainFreshBeanFactory()
+AbstractApplicationContext->AbstractRefreshableApplicationContext:refreshBeanFactory()
+AbstractRefreshableApplicationContext->AbstractXmlApplicationContext:loadBeanDefinitions(DefaultListableBeanFactory beanFactory) 创建BeanFactory(DefaultListableBeanFactory)
+AbstractXmlApplicationContext->AbstractXmlApplicationContext:loadBeanDefinitions(XmlBeanDefinitionReader reader) 创建XmlBeanDefinitionReader
+AbstractXmlApplicationContext->XmlBeanDefinitionReader:loadBeanDefinitions(String... locations) 查找xml配置文件
+XmlBeanDefinitionReader->XmlBeanDefinitionReader:loadBeanDefinitions(EncodedResource encodedResource) 加载xml配置文件
+XmlBeanDefinitionReader->XmlBeanDefinitionReader:doLoadBeanDefinitions(InputSource inputSource, Resource resource) 解析xml为document
+XmlBeanDefinitionReader->BeanDefinitionDocumentReader:doRegisterBeanDefinitions(Element root) 根据document封装Beandefinition
+BeanDefinitionDocumentReader->BeanDefinitionDocumentReader: parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate) 委托解析解析默认标签 parseCustomElement(Element ele)解析自定义标签
+BeanDefinitionDocumentReader->BeanDefinitionParserDelegate:parseBeanDefinitionElement(Element ele, @Nullable BeanDefinition containingBean) 委托解析 <bean> 属性以及自标签
+
+BeanDefinitionParserDelegate-->BeanDefinitionDocumentReader: BeanDefinitionHodler BeanDefinition的包装 两个属性 beanName, BeanDefinition
+BeanDefinitionDocumentReader->BeanFactory:registerBeanDefinition(String beanName, BeanDefinition beanDefinition) 注册到BeanFactory
+BeanDefinitionDocumentReader->BeanDefinitionParserDelegate: parseCustomElement(Element ele) 解析自定义标签
+BeanDefinitionParserDelegate->NamespaceHandler: parse(Element element, ParserContext parserContext) 获取 namespace中init注册的解析类 并将自定义标签解析为BeanDefinition
+
+AbstractRefreshableApplicationContext-->AbstractApplicationContext: BeanFactory
+
+note over BeanFactory: beanDefinitionNames 实例化时循环 getBeanDefinition,beanDefinitionMap BeanName根BeanDefinition的映射
+```
+
+BeanDefinition 描述了 Spring 实例化 Bean时的行为
+
