@@ -1,8 +1,11 @@
 package cn.net.immortal.mybatis.jdbc;
 
+import com.mysql.cj.jdbc.JdbcConnection;
+import com.mysql.cj.jdbc.StatementImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.sql.*;
 
 /**
@@ -46,6 +49,40 @@ public class JdbcOperation {
             //6、关闭连接
             resultSet.close();
             preparedStatement.close();
+            connection.close();
+        }
+    }
+
+
+    /**
+     * 多线程事物是然并卵的
+     * @throws SQLException
+     */
+    @Test
+    public void operationAsync() throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement1 = null;
+        PreparedStatement preparedStatement2 = null;
+        try {
+            //2、创建连接
+            connection = DriverManager.getConnection(url, username, password);
+
+            //3、创建Statement
+            preparedStatement1 = connection.prepareStatement(sql);
+            preparedStatement2 = connection.prepareStatement(sql);
+            Field field = StatementImpl.class.getDeclaredField("connection");
+            field.setAccessible(true);
+            JdbcConnection o1 = (JdbcConnection) field.get(preparedStatement1);
+            JdbcConnection o2 = (JdbcConnection) field.get(preparedStatement2);
+            System.out.println(o1.hashCode() == o2.hashCode());
+            System.out.println(o1.getConnectionMutex().hashCode() == o1.getConnectionMutex().hashCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //6、关闭连接
+            preparedStatement2.close();
+            preparedStatement1.close();
             connection.close();
         }
     }
