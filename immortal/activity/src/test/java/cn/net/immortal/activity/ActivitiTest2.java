@@ -5,6 +5,7 @@ import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.DeploymentBuilder;
+import org.activiti.engine.repository.Model;
 import org.junit.Test;
 
 public class ActivitiTest2 {
@@ -17,6 +18,7 @@ public class ActivitiTest2 {
     ProcessEngine processEngine = configuration.buildProcessEngine();
     //资源相关的service
     RepositoryService repositoryService = processEngine.getRepositoryService();
+    Model model = repositoryService.newModel();
     //进行部署
     //act_re_deployment 部署信息
     //act_re_procdef 流程定义信息

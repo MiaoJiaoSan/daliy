@@ -12,41 +12,24 @@ import java.util.concurrent.*;
  */
 public class Completable {
 
-    public static final Executor exec = Executors.newFixedThreadPool(10);
+
+    static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 
-        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.supplyAsync(() -> new ArrayList<String>() {{
-            add("12123");
-        }})
-//                .thenAcceptAsync(System.out::println)
-                .thenComposeAsync(d -> {
-                    return getArrayListDouble(d);
-                })
-                .thenAcceptAsync(r -> {})
-                .thenComposeAsync(i -> {
-                    return getArrayListInteger(Collections.singletonList(i));
-                })
-                .thenAcceptAsync(r -> System.out.println(r));
-//        System.out.println(voidCompletableFuture.get());
-        System.in.read();
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("1");
+        },executor).whenComplete((r,t) -> {
+            System.out.println("2");
+        }).get();
+
     }
 
-    private static CompletableFuture<?> getArrayListDouble(List<?> s) {
-//        System.out.println(Thread.currentThread().getId());
-        return CompletableFuture.supplyAsync(() -> {
-            List<Double> list = new ArrayList(s);
-            list.add(1.0d);
-            return list;
-        });
-    }
 
-    private static CompletableFuture<?> getArrayListInteger(List<?> d) {
-//        System.out.println(Thread.currentThread().getId());
-        return CompletableFuture.supplyAsync(() -> {
-            List<Integer> list = new ArrayList(d);
-            list.add(1);
-            return list;
-        });
-    }
 }

@@ -4,8 +4,11 @@ package cn.net.immortal.activity;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Test;
+
+import java.util.HashMap;
 
 public class ActivitiTest3 {
 
@@ -24,7 +27,11 @@ public class ActivitiTest3 {
     //act_ru_execution
     //act_ru_identitylink 当前参与者
     RuntimeService runtimeService = processEngine.getRuntimeService();
-    ProcessInstance holiday = runtimeService.startProcessInstanceByKey("holiday");
+    ProcessInstance holiday = runtimeService.startProcessInstanceByKey("holiday", new HashMap<String, Object>(1) {{
+      put("leader", "zhangsan");
+    }});
+    TaskService taskService = processEngine.getTaskService();
+    taskService.createTaskQuery().singleResult().getFormKey();
 
   }
 }
